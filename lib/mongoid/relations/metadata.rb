@@ -750,7 +750,8 @@ module Mongoid # :nodoc:
       # @since 2.0.0.rc.1
       def lookup_inverse(other)
         return nil unless other
-        other.to_a.first.relations.each_pair do |key, meta|
+        document = other.is_a?(Array) ? other.first : other
+        document.relations.each_pair do |key, meta|
           return meta.name if meta.as == name
         end
       end

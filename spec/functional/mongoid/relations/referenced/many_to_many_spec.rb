@@ -1848,5 +1848,4 @@ describe Mongoid::Relations::Referenced::ManyToMany do
       person.preferences.order_by(:name.desc).to_a.should == [preference_three, preference_two, preference_one]
     end
   end
-
 end

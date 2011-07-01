@@ -123,6 +123,19 @@ module Mongoid #:nodoc:
         find_or(:build, attrs, &block)
       end
 
+      # Get the first document from the association. This should go through the
+      # criteria in order to not load the entire association.
+      #
+      # @example Get the first document.
+      #   person.posts.first
+      #
+      # @return [ Document ] The first document in the relation.
+      #
+      # @since 2.1.0
+      def first
+        criteria.first
+      end
+
       # This proxy can never be nil.
       #
       # @example Is the proxy nil?
