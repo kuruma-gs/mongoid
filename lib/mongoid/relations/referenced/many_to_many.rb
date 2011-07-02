@@ -95,10 +95,14 @@ module Mongoid # :nodoc:
         #
         # @since 2.0.0.rc.1
         def delete(document, options = {})
-          target.delete(document).tap do |doc|
-            if doc
-              binding.unbind_one(doc, default_options.merge!(options))
+          unless target.is_a?(Mongoid::Criteria)
+            target.delete(document).tap do |doc|
+              binding.unbind_one(doc, default_options.merge!(options)) if doc
             end
+          else
+            count = klass.where(:_id => document.id).delete
+            binding.unbind_one(document, default_options.merge!(options))
+            count > 0 ? document : nil
           end
         end
 
@@ -190,6 +194,8 @@ module Mongoid # :nodoc:
             if new_target
               binding.unbind(options)
               relation.target = new_target.to_a
+              @initialized = true
+              @loaded = true
               base.send(metadata.foreign_key_setter, new_target.map { |doc| doc.id })
               bind(options)
             else

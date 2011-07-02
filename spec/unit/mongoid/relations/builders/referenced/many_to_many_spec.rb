@@ -35,7 +35,7 @@ describe Mongoid::Relations::Builders::Referenced::ManyToMany do
       end
 
       before do
-        Post.expects(:find).with(object).returns([ post ])
+        Post.expects(:any_in).with(:_id => object).returns([ post ])
       end
 
       it "sets the documents" do
@@ -68,7 +68,7 @@ describe Mongoid::Relations::Builders::Referenced::ManyToMany do
 
       before do
         criteria = stub
-        criteria.expects(:find).returns([ post ])
+        criteria.expects(:any_in).returns([ post ])
         Post.expects(:order_by).returns(criteria)
         @documents = builder.build
       end

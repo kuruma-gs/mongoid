@@ -34,6 +34,18 @@ module Mongoid # :nodoc:
         extend metadata.extension if metadata.extension?
       end
 
+      # Determines if the target been loaded into memory or not.
+      #
+      # @example Is the proxy loaded?
+      #   proxy.loaded?
+      #
+      # @return [ true, false ] True if loaded, false if not.
+      #
+      # @since 2.0.0.rc.1
+      def loaded?
+        !!@loaded
+      end
+
       protected
 
       # Get the collection from the root of the hierarchy.
@@ -63,18 +75,6 @@ module Mongoid # :nodoc:
       # @since 2.0.0.rc.1
       def instantiated(type = nil)
         type ? type.new : metadata.klass.new
-      end
-
-      # Determines if the target been loaded into memory or not.
-      #
-      # @example Is the proxy loaded?
-      #   proxy.loaded?
-      #
-      # @return [ true, false ] True if loaded, false if not.
-      #
-      # @since 2.0.0.rc.1
-      def loaded?
-        !!@loaded
       end
 
       # Takes the supplied documents and sets the metadata on them. Used when

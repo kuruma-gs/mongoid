@@ -133,7 +133,7 @@ module Mongoid #:nodoc:
       #
       # @since 2.1.0
       def first
-        criteria.first
+        target.empty? ? criteria.first : target.first
       end
 
       # This proxy can never be nil.
