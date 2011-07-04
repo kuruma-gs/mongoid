@@ -200,6 +200,14 @@ module Mongoid # :nodoc:
         !!extension
       end
 
+      def cascade_callbacks
+        self[:cascade_callbacks]
+      end
+
+      def cascade_callbacks?
+        !!cascade_callbacks
+      end
+
       # Handles all the logic for figuring out what the foreign_key is for each
       # relations query. The logic is as follows:
       #

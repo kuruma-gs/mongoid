@@ -33,7 +33,7 @@ module Mongoid #:nodoc:
     def _cascade_targets(kind)
       cascadable_children = []
       self.relations.each_pair do |name, metadata|
-        next unless metadata.embedded? && metadata.cascade_callbacks
+        next unless metadata.embedded? && metadata.cascade_callbacks?
 
         target = self.send(name)
 
